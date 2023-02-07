@@ -52,14 +52,17 @@ You can add multiple paths at once with `add_paths()`:
 );
 ```
 
-The dispatch happens on parse_query, so you can then modify the query via pre_get_posts or do whatever
+The dispatch happens on `parse_query`, so you can then modify the query via
+`pre_get_posts` or do whatever
 you have to do. You can even just load a static file and exit if you simply need to render static content.
 
-When the path is loaded, the action dispatch_path_{$path} is fired. You can hook onto this instead of or
+When the path is loaded, the action `dispatch_path_{$path}` is fired. You can
+hook onto this instead of or
 in addition to passing a callback to add_path(s). The callback is optional.
 
-Lastly, you can set custom rewrites if your paths are more complex. In these cases, the 'path' argument
-essentially becomes a slug. See [add_rewrite_rule()](http://codex.wordpress.org/Rewrite_API/add_rewrite_rule)
+Lastly, you can set custom rewrites if your paths are more complex. In these
+cases, the 'path' argument essentially becomes a slug. See
+[add_rewrite_rule()](http://codex.wordpress.org/Rewrite_API/add_rewrite_rule)
 for details about 'rule', 'redirect' (rewrite), and 'position'.
 
 ## Full breakdown of all the path options

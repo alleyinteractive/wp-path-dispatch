@@ -68,6 +68,13 @@ class Path_Dispatch {
 	}
 
 	/**
+	 * Clear the instance of this class.
+	 */
+	public static function clear_instance() {
+		self::$instance = null;
+	}
+
+	/**
 	 * Setup class for the first time.
 	 */
 	protected function __construct() {
