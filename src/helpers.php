@@ -2,6 +2,8 @@
 /**
  * Helpers for WP Path Dispatch.
  *
+ * phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+ *
  * @package WP_Path_Dispatch
  */
 
