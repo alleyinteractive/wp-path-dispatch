@@ -1,10 +1,10 @@
 <?php
-namespace Create_PHP_Package\Tests;
+namespace WP_Path_Dispatch\Tests;
 
 use Mantle\Testkit\Test_Case as TestkitTest_Case;
 
 /**
- * Create PHP Package Base Test Case
+ * WP Path Dispatch Base Test Case
  */
 abstract class Test_Case extends TestkitTest_Case {
 
