@@ -2,9 +2,11 @@
 /**
  * This class is a custom dispatch system.
  *
- * @package Path_Dispatch
+ * @package WP_Path_Dispatch
  * @version 1.0.0
  */
+
+namespace WP_Path_Dispatch;
 
 /**
  * Path Dispatch

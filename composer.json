@@ -26,7 +26,8 @@
     "prefer-stable": true,
     "autoload": {
         "files": [
-            "src/class-path-dispatch.php"
+            "src/class-path-dispatch.php",
+            "src/helpers.php"
         ]
     },
     "config": {
