@@ -93,7 +93,7 @@ class Path_Dispatch {
 	 * (or a string, which will become an array).
 	 *
 	 * @param string|array $args {
-	 *      If string, becomes array( 'path' => $args ). Otherwise, 'path' must be set. In addition to
+	 *      If string, becomes [ 'path' => $args ]. Otherwise, 'path' must be set. In addition to
 	 *      the keys mentioned below, you can pass any other key => value pairs. This whole array will be
 	 *      passed when the action fires, so you'll be able to access your data at that time.
 	 *
