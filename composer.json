@@ -1,48 +1,49 @@
 {
-    "name": "alleyinteractive/create-php-package",
-    "description": "A skeleton PHP package geared for WordPress Development",
+    "name": "alleyinteractive/wp-path-dispatch",
+    "description": "Simply and easily add a URL which fires an action, triggers a callback, and/or loads a template.",
+    "license": "GPL-2.0-or-later",
     "type": "library",
     "keywords": [
         "alleyinteractive",
-        "create-php-package"
+        "wp-path-dispatch"
     ],
-    "homepage": "https://github.com/alleyinteractive/create-php-package",
-    "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "author_name",
-            "email": "email@domain.com"
+            "name": "Matt Boynes",
+            "email": "info@alley.com"
         }
     ],
+    "homepage": "https://github.com/alleyinteractive/wp-path-dispatch",
     "require": {
-        "php": "^8.0",
-        "alleyinteractive/composer-wordpress-autoloader": "^1.0"
+        "php": "^8.0"
     },
     "require-dev": {
-        "alleyinteractive/alley-coding-standards": "^0.3 || ^0.4 || ^1.0",
-        "mantle-framework/testkit": "^0.9",
+        "alleyinteractive/alley-coding-standards": "^1.0",
+        "mantle-framework/testkit": "^0.10",
         "nunomaduro/collision": "^5.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "files": [
+            "src/class-path-dispatch.php",
+            "src/helpers.php"
+        ]
     },
     "config": {
         "allow-plugins": {
             "alleyinteractive/composer-wordpress-autoloader": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "pestphp/pest-plugin": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
     },
     "extra": {
         "wordpress-autoloader": {
-            "autoload": {
-                "Create_PHP_Package\\": "src"
-            },
             "autoload-dev": {
-                "Create_PHP_Package\\Tests\\": "tests"
+                "WP_Path_Dispatch\\Tests\\": "tests"
             }
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "phpcbf": "phpcbf .",
         "phpcs": "phpcs .",
