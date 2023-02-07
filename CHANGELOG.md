@@ -2,6 +2,6 @@
 
 All notable changes to `Create PHP Package` will be documented in this file.
 
-## 0.1.0 - 202X-XX-XX
+## v1.0.0 - 2023-02-07
 
-- Initial release
+- Initial release of standalone package.
