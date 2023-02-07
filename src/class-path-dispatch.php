@@ -121,17 +121,19 @@ class Path_Dispatch {
 		}
 
 		if ( ! empty( $args['path'] ) ) {
+			$path = $args['path'];
+
 			if ( ! empty( $args['rewrite'] ) ) {
-				$this->rewrite_paths[ $args['path'] ] = $args;
+				$this->rewrite_paths[ $path ] = $args;
 				if ( ! empty( $args['rewrite']['query_vars'] ) ) {
 					$this->qv = array_merge( $this->qv, (array) $args['rewrite']['query_vars'] );
 				}
 			} else {
-				$this->basic_paths[ $args['path'] ] = $args;
+				$this->basic_paths[ $path ] = $args;
 			}
 
 			if ( ! empty( $args['callback'] ) ) {
-				add_action( 'dispatch_path_' . $args['path'], $args['callback'] );
+				add_action( 'dispatch_path_' . $path, $args['callback'] );
 			}
 		}
 	}
