@@ -8,6 +8,8 @@
 
 namespace WP_Path_Dispatch;
 
+use WP_Query;
+
 /**
  * Path Dispatch
  */
@@ -190,16 +192,19 @@ class Path_Dispatch {
 	 * Trigger an action when a dispatched path is requested. Also, potentially load
 	 * a template if that was set.
 	 *
-	 * @param  array $query Dispatch query.
+	 * @param WP_Query $query The WP_Query instance.
 	 */
 	public function dispatch_path( &$query ) {
 		$path = get_query_var( 'dispatch' );
 		if ( $query->is_main_query() && $path ) {
+			$args = [];
+
 			if ( ! empty( $this->basic_paths[ $path ] ) ) {
 				$args = $this->basic_paths[ $path ];
 			} elseif ( ! empty( $this->rewrite_paths[ $path ] ) ) {
 				$args = $this->rewrite_paths[ $path ];
 			}
+
 			if ( empty( $args['action'] ) ) {
 				do_action( 'dispatch_path_' . $path, $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			} else {
