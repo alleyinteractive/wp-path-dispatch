@@ -2,14 +2,14 @@
 namespace WP_Path_Dispatch\Tests\Feature;
 
 use WP_Path_Dispatch\Path_Dispatch;
-use WP_Path_Dispatch\Tests\Test_Case;
+use WP_Path_Dispatch\Tests\TestCase;
 
 use function WP_Path_Dispatch\Path_Dispatch;
 
 /**
  * Visit {@see https://mantle.alley.co/testing/test-framework.html} to learn more.
  */
-class Path_Dispatch_Test extends Test_Case {
+class PathDispatchTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
