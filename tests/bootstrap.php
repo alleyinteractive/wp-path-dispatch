@@ -8,4 +8,5 @@
  */
 \Mantle\Testing\manager()
 	->maybe_rsync_plugin()
+	->with_sqlite()
 	->install();
