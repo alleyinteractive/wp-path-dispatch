@@ -1,7 +1,6 @@
 # WP Path Dispatch
 
-[![Coding Standards](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/coding-standards.yml)
-[![Testing Suite](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/unit-test.yml/badge.svg)](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/unit-test.yml)
+[![All Pull Request Tests](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/all-pr-tests.yml/badge.svg?branch=develop)](https://github.com/alleyinteractive/wp-path-dispatch/actions/workflows/all-pr-tests.yml)
 
 Simply and easily add a URL which fires an action, triggers a callback, and/or
 loads a template.
