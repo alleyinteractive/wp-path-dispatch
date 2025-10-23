@@ -10,38 +10,53 @@ namespace WP_Path_Dispatch;
 
 use WP_Query;
 
+use function Mantle\Support\Helpers\terminate_request;
+
 /**
  * Path Dispatch
+ *
+ * @phpstan-type PathArgs array{
+ *   path?: string,
+ *   callback?: callable,
+ *   action?: string,
+ *   rewrite?: array{
+ *     rule: string,
+ *     redirect?: string,
+ *     position?: 'top'|'bottom',
+ *     query_vars?: string|array<string>
+ *   },
+ *   template?: string
+ * }
  */
 class Path_Dispatch {
 
 	/**
 	 * Query vars that should be allowed.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	public $qv = [ 'dispatch' ];
+	public array $qv = [ 'dispatch' ];
 
 	/**
 	 * Array of basic paths.
 	 *
-	 * @var array
+	 * @var array<string, PathArgs>
 	 */
-	public $basic_paths = [];
+	public array $basic_paths = [];
 
 	/**
 	 * Array of rewrite paths.
 	 *
-	 * @var array
+	 * @var array<string, PathArgs>
 	 */
-	public $rewrite_paths = [];
+	public array $rewrite_paths = [];
 
 	/**
 	 * Instance of this class.
 	 *
-	 * @var Path_Dispatch
+	 * @var Path_Dispatch|null
 	 */
-	private static $instance;
+	private static ?Path_Dispatch $instance;
 
 	/**
 	 * Don't allow __clone.
@@ -62,17 +77,18 @@ class Path_Dispatch {
 	 *
 	 * @return Path_Dispatch
 	 */
-	public static function instance() {
+	public static function instance(): Path_Dispatch {
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new Path_Dispatch();
 		}
+
 		return self::$instance;
 	}
 
 	/**
 	 * Clear the instance of this class.
 	 */
-	public static function clear_instance() {
+	public static function clear_instance(): void {
 		self::$instance = null;
 	}
 
@@ -114,8 +130,9 @@ class Path_Dispatch {
 	 *                                         @see http://codex.wordpress.org/Plugin_API/Filter_Reference/query_vars
 	 *      }
 	 * }
+	 * @phpstan-param PathArgs|string $args
 	 */
-	public function add_path( $args = [] ) {
+	public function add_path( array|string $args = [] ): void {
 		if ( is_string( $args ) && ! empty( $args ) ) {
 			$args = [
 				'path' => $args,
@@ -143,11 +160,12 @@ class Path_Dispatch {
 	/**
 	 * Add multiple paths in one call.
 	 *
-	 * @see Path_Dispatch::add_path
+	 * @see Path_Dispatch::add_path()
 	 *
 	 * @param array $paths An array of arrays that would be passed to add_path.
+	 * @phpstan-param array<PathArgs> $paths
 	 */
-	public function add_paths( $paths ) {
+	public function add_paths( array $paths ): void {
 		foreach ( $paths as $path ) {
 			$this->add_path( $path );
 		}
@@ -156,17 +174,17 @@ class Path_Dispatch {
 	/**
 	 * Add the class query var "dispatch" as well as any others added through add_path.
 	 *
-	 * @param array $qv The current query vars.
-	 * @return array The modified query vars.
+	 * @param string[] $qv The current query vars.
+	 * @return string[] The modified query vars.
 	 */
-	public function add_query_var( $qv ) {
+	public function add_query_var( array $qv ): array {
 		return array_merge( $qv, $this->qv );
 	}
 
 	/**
 	 * Add rewrite rules for our dispatched paths.
 	 */
-	public function add_rewrite_rules() {
+	public function add_rewrite_rules(): void {
 		if ( ! empty( $this->basic_paths ) ) {
 			$slugs = array_map( 'preg_quote', array_keys( $this->basic_paths ) );
 			$slugs = implode( '|', $slugs );
@@ -194,9 +212,9 @@ class Path_Dispatch {
 	 *
 	 * @param WP_Query $query The WP_Query instance.
 	 */
-	public function dispatch_path( &$query ) {
+	public function dispatch_path( &$query ): void {
 		$path = get_query_var( 'dispatch' );
-		if ( $query->is_main_query() && $path ) {
+		if ( $query->is_main_query() && $path && is_string( $path ) ) {
 			$args = [];
 
 			if ( ! empty( $this->basic_paths[ $path ] ) ) {
@@ -213,8 +231,23 @@ class Path_Dispatch {
 
 			if ( ! empty( $args['template'] ) ) {
 				get_template_part( 'dispatch', $args['template'] );
-				exit;
+
+				$this->terminate_request();
 			}
 		}
+	}
+
+	/**
+	 * Terminate the request.
+	 *
+	 * @param int $exit_status Exit status code.
+	 * @return never
+	 */
+	protected function terminate_request( int $exit_status = 0 ): never {
+		if ( function_exists( 'Mantle\Support\Helpers\terminate_request' ) ) {
+			\Mantle\Support\Helpers\terminate_request( $exit_status );
+		}
+
+		exit( (int) $exit_status );
 	}
 }
