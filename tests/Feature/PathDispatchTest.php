@@ -4,6 +4,7 @@ namespace WP_Path_Dispatch\Tests\Feature;
 use WP_Path_Dispatch\Path_Dispatch;
 use WP_Path_Dispatch\Tests\TestCase;
 
+use function Mantle\Support\Helpers\terminate_request;
 use function WP_Path_Dispatch\Path_Dispatch;
 
 /**
@@ -29,6 +30,7 @@ class PathDispatchTest extends TestCase {
 				'path'     => 'some-path',
 				'callback' => function () {
 					echo 'some-response';
+					terminate_request();
 				},
 			]
 		);
@@ -37,7 +39,7 @@ class PathDispatchTest extends TestCase {
 
 		$this->get( '/some-path/' )
 			->assertStatus( 200 )
-			->assertSee( 'some-response' );
+			->assertContent( 'some-response' );
 	}
 
 	public function test_add_multiple_paths() {
@@ -47,12 +49,14 @@ class PathDispatchTest extends TestCase {
 					'path'     => 'some-path',
 					'callback' => function () {
 						echo 'some-response';
+						terminate_request();
 					},
 				],
 				[
 					'path'     => 'some-other-path',
 					'callback' => function () {
 						echo 'some-other-response';
+						terminate_request();
 					},
 				],
 			]
@@ -62,11 +66,11 @@ class PathDispatchTest extends TestCase {
 
 		$this->get( '/some-path/' )
 			->assertStatus( 200 )
-			->assertSee( 'some-response' );
+			->assertContent( 'some-response' );
 
 		$this->get( '/some-other-path/' )
 			->assertStatus( 200 )
-			->assertSee( 'some-other-response' );
+			->assertContent( 'some-other-response' );
 	}
 
 	public function test_action_path() {
@@ -95,6 +99,7 @@ class PathDispatchTest extends TestCase {
 				],
 				'callback' => function () {
 					echo 'some-response: ' . get_query_var( 'some_query_var' );
+					terminate_request();
 				},
 			]
 		);
@@ -103,7 +108,30 @@ class PathDispatchTest extends TestCase {
 
 		$this->get( '/example/foo/' )
 			->assertOk()
-			->assertSee( 'some-response: foo' );
+			->assertContent( 'some-response: foo' );
+	}
+
+	public function test_template_path(): void {
+		// Fake the template part being loaded.
+		add_action(
+			'get_template_part',
+			function (): void {
+				echo 'This is a template path response.';
+			}
+		);
+
+		Path_Dispatch()->add_path(
+			[
+				'path'     => 'some-path',
+				'template' => 'some-template',
+			]
+		);
+
+		$this->register_rules();
+
+		$this->get( '/some-path/' )
+			->assertOk()
+			->assertContent( 'This is a template path response.' );
 	}
 
 	protected function register_rules() {

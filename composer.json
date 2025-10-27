@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "alleyinteractive/alley-coding-standards": "^2.0",
-        "mantle-framework/testkit": "^1.0"
+        "mantle-framework/testkit": "^1.8",
+        "szepeviktor/phpstan-wordpress": "^2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -52,9 +53,11 @@
     "scripts": {
         "phpcbf": "phpcbf .",
         "phpcs": "phpcs .",
+        "phpstan": "phpstan --memory-limit=512M",
         "phpunit": "phpunit",
         "test": [
             "@phpcs",
+            "@phpstan",
             "@phpunit"
         ]
     }

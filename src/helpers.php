@@ -14,6 +14,6 @@ namespace WP_Path_Dispatch;
  *
  * @return Path_Dispatch
  */
-function Path_Dispatch() {
+function Path_Dispatch(): Path_Dispatch {
 	return Path_Dispatch::instance();
 }
