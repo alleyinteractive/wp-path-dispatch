@@ -174,10 +174,14 @@ class Path_Dispatch {
 	/**
 	 * Add the class query var "dispatch" as well as any others added through add_path.
 	 *
-	 * @param string[] $qv The current query vars.
-	 * @return string[] The modified query vars.
+	 * @param mixed $qv The current query vars.
+	 * @return mixed The modified query vars.
 	 */
-	public function add_query_var( array $qv ): array {
+	public function add_query_var( $qv ): mixed {
+		if ( ! is_array( $qv ) ) {
+			return $qv;
+		}
+
 		return array_merge( $qv, $this->qv );
 	}
 

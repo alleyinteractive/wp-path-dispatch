@@ -15,12 +15,12 @@
     ],
     "homepage": "https://github.com/alleyinteractive/wp-path-dispatch",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "alleyinteractive/composer-wordpress-autoloader": "^1.0"
     },
     "require-dev": {
-        "alleyinteractive/alley-coding-standards": "^2.0",
-        "mantle-framework/testkit": "^1.8",
+        "alleyinteractive/alley-coding-standards": "^2.6",
+        "mantle-framework/testkit": "^1.22",
         "szepeviktor/phpstan-wordpress": "^2.0"
     },
     "minimum-stability": "dev",
